@@ -1,0 +1,190 @@
+<Window x:Class="Jarvis.BrowserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        Title="Jarvis Browser Pro" Height="850" Width="1400"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="CanResize">
+
+    <Window.Resources>
+        <Style x:Key="QuickLinkStyle" TargetType="Button">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="100"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Background" Value="#2D2D30"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#007ACC"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#007ACC"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+    <Border Background="#1E1E1E" CornerRadius="10" BorderBrush="#007ACC" BorderThickness="2">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Верхняя панель с управлением окном -->
+            <Grid Grid.Row="0" Background="#2D2D30" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" Text="🤖 Jarvis Browser Pro" 
+                          Foreground="#00D4FF" FontSize="16" FontWeight="Bold" 
+                          VerticalAlignment="Center" Margin="10,5"/>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="📊" Click="StatsButton_Click" Width="35" Height="30" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" 
+                           Margin="2" ToolTip="Статистика и обучение"/>
+                    <Button Content="🔖" Click="BookmarksButton_Click" Width="35" Height="30" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" 
+                           Margin="2" ToolTip="Закладки"/>
+                    <Button Content="🕒" Click="HistoryButton_Click" Width="35" Height="30" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" 
+                           Margin="2" ToolTip="История"/>
+                    <Button Content="🤖" Click="AskJarvisButton_Click" Width="35" Height="30" 
+                           Background="#00D4FF" Foreground="White" BorderThickness="0" 
+                           Margin="2" ToolTip="Спросить Jarvis о странице" FontWeight="Bold"/>
+                    <Button Content="🌙" Click="DarkModeButton_Click" Width="35" Height="30" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" 
+                           Margin="2" ToolTip="Тёмная тема"/>
+                    <Button Content="📖" Click="ReaderModeButton_Click" Width="35" Height="30" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" 
+                           Margin="2" ToolTip="Режим чтения"/>
+                    <Button Content="📸" Click="ScreenshotButton_Click" Width="35" Height="30" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" 
+                           Margin="2" ToolTip="Скриншот всей страницы"/>
+                    <Button Content="🌍" Click="TranslateButton_Click" Width="35" Height="30" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" 
+                           Margin="2" ToolTip="Перевести страницу"/>
+                    <Button Content="−" Click="MinimizeButton_Click" Width="35" Height="30" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" 
+                           Margin="2" ToolTip="Свернуть"/>
+                    <Button Content="□" Click="MaximizeButton_Click" Width="35" Height="30" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" 
+                           Margin="2" ToolTip="Развернуть"/>
+                    <Button Content="✖" Click="CloseButton_Click" Width="35" Height="30" 
+                           Background="#D32F2F" Foreground="White" BorderThickness="0" 
+                           Margin="2" ToolTip="Закрыть"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Панель навигации -->
+            <Grid Grid.Row="1" Background="#252526" Height="45">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Кнопки навигации -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button Content="◀" Click="BackButton_Click" Margin="5" Width="40" Height="35" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" ToolTip="Назад"/>
+                    <Button Content="▶" Click="ForwardButton_Click" Margin="5" Width="40" Height="35" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" ToolTip="Вперед"/>
+                    <Button Content="🔄" Click="RefreshButton_Click" Margin="5" Width="40" Height="35" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" ToolTip="Обновить"/>
+                    <Button Content="🏠" Click="HomeButton_Click" Margin="5" Width="40" Height="35" 
+                           Background="#3E3E42" Foreground="White" BorderThickness="0" ToolTip="Домой"/>
+                </StackPanel>
+                
+                <!-- Адресная строка -->
+                <Border Grid.Column="1" Background="#1E1E1E" BorderBrush="#007ACC" 
+                       BorderThickness="1" CornerRadius="5" Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Text="🔒" Foreground="#4CAF50" 
+                                  VerticalAlignment="Center" Margin="8,0,5,0" FontSize="14"/>
+                        
+                        <TextBox x:Name="UrlBox" Grid.Column="1"
+                                Background="Transparent" 
+                                Foreground="White" 
+                                BorderThickness="0"
+                                VerticalContentAlignment="Center"
+                                FontSize="13"
+                                KeyDown="UrlBox_KeyDown"
+                                Margin="0,0,5,0"/>
+                        
+                        <Button Grid.Column="2" Content="⭐" Click="AddBookmarkButton_Click" 
+                               Width="30" Height="30" Background="Transparent" 
+                               Foreground="#FFD700" BorderThickness="0" 
+                               Margin="0,0,5,0" ToolTip="Добавить в закладки"/>
+                    </Grid>
+                </Border>
+                
+                <!-- Кнопка "Перейти" -->
+                <Button Grid.Column="2" Content="→" Click="GoButton_Click" Margin="5" 
+                       Width="45" Height="35" Background="#0E7C0E" Foreground="White" 
+                       BorderThickness="0" FontSize="18" ToolTip="Перейти"/>
+            </Grid>
+
+            <!-- Быстрые ссылки (если пустая страница) -->
+            <Grid Grid.Row="2" x:Name="QuickLinksPanel" Visibility="Collapsed" Background="#1E1E1E">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="🚀 Быстрые ссылки" Foreground="White" 
+                              FontSize="24" FontWeight="Bold" Margin="0,0,0,30"/>
+                    
+                    <WrapPanel HorizontalAlignment="Center">
+                        <Button Content="🔍 Google" Click="QuickLink_Click" Tag="https://google.com" 
+                               Style="{StaticResource QuickLinkStyle}"/>
+                        <Button Content="▶️ YouTube" Click="QuickLink_Click" Tag="https://youtube.com" 
+                               Style="{StaticResource QuickLinkStyle}"/>
+                        <Button Content="💬 Telegram" Click="QuickLink_Click" Tag="https://web.telegram.org" 
+                               Style="{StaticResource QuickLinkStyle}"/>
+                        <Button Content="🐙 GitHub" Click="QuickLink_Click" Tag="https://github.com" 
+                               Style="{StaticResource QuickLinkStyle}"/>
+                        <Button Content="🛒 Amazon" Click="QuickLink_Click" Tag="https://amazon.com" 
+                               Style="{StaticResource QuickLinkStyle}"/>
+                        <Button Content="🐦 Twitter" Click="QuickLink_Click" Tag="https://twitter.com" 
+                               Style="{StaticResource QuickLinkStyle}"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Grid>
+
+            <!-- WebView2 Browser -->
+            <wv2:WebView2 x:Name="WebView" Grid.Row="2" Margin="5"/>
+
+            <!-- Статус-бар -->
+            <Border Grid.Row="3" Background="#252526" Height="25">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock x:Name="StatusText" Grid.Column="0" 
+                              Text="Готов" Foreground="#AAAAAA" 
+                              VerticalAlignment="Center" Margin="10,0"/>
+                    
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <TextBlock x:Name="LoadingText" Text="" Foreground="#00D4FF" 
+                                  VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBlock Text="Jarvis Browser v1.0" Foreground="#666666" 
+                                  VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

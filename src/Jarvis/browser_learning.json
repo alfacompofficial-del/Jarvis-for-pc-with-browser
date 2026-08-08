@@ -1,0 +1,25 @@
+{
+  "SiteVisits": {
+    "www.youtube.com": 5,
+    "www.google.com": 6,
+    "www.alfacomp.uz": 1
+  },
+  "CommandAliases": {},
+  "HourlyPatterns": {
+    "17": [
+      "www.youtube.com"
+    ],
+    "18": [
+      "www.google.com",
+      "www.youtube.com",
+      "www.alfacomp.uz"
+    ]
+  },
+  "SavedFormData": [],
+  "Preferences": {
+    "AutoDarkMode": false,
+    "DarkModeSites": [],
+    "BlockedDomains": [],
+    "PreferredSearchEngine": "google"
+  }
+}

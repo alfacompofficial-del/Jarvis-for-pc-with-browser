@@ -1,0 +1,31 @@
+# Build output
+src/Jarvis/bin/
+src/Jarvis/obj/
+
+# Web (PWA - отдельный проект)
+web/
+
+# Kiro IDE
+.kiro/
+
+# User secrets / sensitive
+*.user
+*.suo
+.vs/
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# NuGet
+*.nupkg
+packages/
+
+# Test results
+TestResults/
+src/Tests/bin/
+src/Tests/obj/
