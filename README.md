@@ -78,7 +78,7 @@ src/
 Jarvis использует Groq API. По умолчанию встроен ключ для демонстрации. Для личного использования замените в `MainWindow.xaml.cs`:
 
 ```csharp
-private readonly string _groqKey = "ВАШ_КЛЮЧ_ЗДЕСЬ";
+private readonly string _groqKey = "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";
 ```
 
 Получить ключ: [console.groq.com](https://console.groq.com)
