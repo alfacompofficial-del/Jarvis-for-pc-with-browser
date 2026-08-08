@@ -25,8 +25,9 @@ namespace Jarvis
         private SpeechRecognitionEngine? _recognizer;
         private readonly HttpClient _httpClient;
         
-        // Groq API (быстрая нейронка!)
-        private readonly string _groqKey = "GROQ_KEY_REMOVED";
+        // Groq API ключ — задайте переменную среды GROQ_API_KEY или вставьте ключ сюда
+        // Получить ключ: https://console.groq.com
+        private readonly string _groqKey = Environment.GetEnvironmentVariable("GROQ_API_KEY") ?? "ВСТАВЬТЕ_ВАШ_GROQ_КЛЮЧ_ЗДЕСЬ";
         
         private bool _isListening = false;
         private bool _isWaitingForCommand = false; // После "Хей Джарвис"

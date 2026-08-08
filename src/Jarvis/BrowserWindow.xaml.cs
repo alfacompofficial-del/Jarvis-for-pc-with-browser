@@ -21,7 +21,7 @@ namespace Jarvis
         private readonly string _historyFile = "browser_history.json";
         private readonly string _learningFile = "browser_learning.json";
         private readonly HttpClient _httpClient = new HttpClient();
-        private readonly string _groqKey = "GROQ_KEY_REMOVED";
+        private readonly string _groqKey = Environment.GetEnvironmentVariable("GROQ_API_KEY") ?? "ВСТАВЬТЕ_ВАШ_GROQ_КЛЮЧ_ЗДЕСЬ";
         private bool _darkModeEnabled = false;
         private bool _readerModeEnabled = false;
         private Models.BrowserLearning _learning = new Models.BrowserLearning();
